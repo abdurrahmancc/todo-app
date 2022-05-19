@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import TodoApp from "./Components/TodoApp";
+import { Toaster } from "react-hot-toast";
+import Login from "./Components/Login";
+
+import Navber from "./Components/Navber";
+import RequireAuth from "./Components/Hooks/RequireAuth";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Toaster />
+      <Navber></Navber>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              <TodoApp></TodoApp>
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="todoapp"
+          element={
+            <RequireAuth>
+              <TodoApp></TodoApp>
+            </RequireAuth>
+          }
+        ></Route>
+        <Route path="login" element={<Login></Login>}></Route>
+      </Routes>
     </div>
   );
 }
